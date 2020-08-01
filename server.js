@@ -15,6 +15,17 @@ const server = http.createServer((req, res) => {
     'X-Powered-By': 'Node.js',
   });
 
+  let body = [];
+  // Retrieve body data from client
+  req
+    .on('data', (chuck) => {
+      body.push(chuck);
+    })
+    .on('end', () => {
+      body = Buffer.concat(body).toString();
+      console.log(body);
+    });
+
   res.end(
     JSON.stringify({
       error: 'Please add email',
