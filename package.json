@@ -1,0 +1,27 @@
+{
+  "name": "nodehttpserver",
+  "version": "1.0.0",
+  "description": "Basic HTTP server in node",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adnanreza/httpServer.git"
+  },
+  "keywords": [
+    "http",
+    "node"
+  ],
+  "author": "Adnan Reza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adnanreza/httpServer/issues"
+  },
+  "homepage": "https://github.com/adnanreza/httpServer#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
