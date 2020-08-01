@@ -6,33 +6,43 @@ const todos = [
 ];
 
 const server = http.createServer((req, res) => {
-  // res.statusCode = 404;
-  // res.setHeader('Content-Type', 'application/json');
-  // res.setHeader('X-Powered-By', 'Node.js');
-
-  res.writeHead(400, {
-    'Content-Type': 'application/json',
-    'X-Powered-By': 'Node.js',
-  });
+  const { method, url } = req;
 
   let body = [];
-  // Retrieve body data from client
+
   req
-    .on('data', (chuck) => {
-      body.push(chuck);
+    .on('data', (chunk) => {
+      body.push(chunk);
     })
     .on('end', () => {
       body = Buffer.concat(body).toString();
-      console.log(body);
-    });
 
-  res.end(
-    JSON.stringify({
-      error: 'Please add email',
-      success: false,
-      data: null,
-    })
-  );
+      let status = 404;
+
+      const response = {
+        success: false,
+        data: null,
+      };
+
+      if (method === 'GET' && url === '/todos') {
+        status = 200;
+        response.success = true;
+        response.data = todos;
+      } else if (method === 'POST' && url === '/todos') {
+        const { id, text } = JSON.parse(body);
+        todos.push({ id, text });
+        status = 201;
+        response.success = true;
+        response.data = todos;
+      }
+
+      res.writeHead(status, {
+        'Content-Type': 'application/json',
+        'X-Powered-By': 'Node.js',
+      });
+
+      res.end(JSON.stringify(response));
+    });
 });
 
 const PORT = 5000;
