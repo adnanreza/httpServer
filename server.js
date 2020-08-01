@@ -30,10 +30,15 @@ const server = http.createServer((req, res) => {
         response.data = todos;
       } else if (method === 'POST' && url === '/todos') {
         const { id, text } = JSON.parse(body);
-        todos.push({ id, text });
-        status = 201;
-        response.success = true;
-        response.data = todos;
+
+        if (!id || !text) {
+          status = 400;
+        } else {
+          todos.push({ id, text });
+          status = 201;
+          response.success = true;
+          response.data = todos;
+        }
       }
 
       res.writeHead(status, {
